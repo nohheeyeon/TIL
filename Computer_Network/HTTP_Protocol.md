@@ -1,10 +1,14 @@
 # HTTP 프로토콜
 
+![HTTP](image-1.png)
+
 - Hypertext Transfer Protocol
 - 인터넷에서 데이터를 주고받기 위한 통신 규약이며, 주로 웹 브라우저와 웹 서버 간에 HTML 문서와 같은 리소스를 전송하는데 사용됩니다.
 - HTTP는 클라이언트와 서버 사이의 요청(Request)과 응답(Response)으로 이루어진 모델을 가지고 있으며, 무상태(Stateless) 프로토콜이기 때문에 각각의 요청은 서로 독립적으로 처리되고 세션 상태를 유지하지 않습니다.
 
 # HTTP의 요청/응답 모델
+
+![HTTP의 요청/응답 모델](image.png)
 
 - HTTP는 클라이언트와 서버 간의 요청(Request)과 응답(Response)으로 이루어진 요청/응답 모델을 가지고 있습니다. 이 모델은 웹 브라우저와 웹 서버 사이에서 데이터를 주고받는 데 사용되며, 웹 페이지를 요청하고 서버로부터 해당 페이지에 필요한 리소스를 받아오는 과정을 설명합니다.
 
@@ -31,6 +35,8 @@
     - 클라이언트는 받은 응답을 기반으로 웹 페이지를 렌더링하고, 필요한 리소스(이미지, 스크립트, 스타일시트 등)를 추가로 요청하여 화면에 표시합니다.
 
 # HTTP 메서드 중 GET과 POST의 차이
+
+![GET과 POST의 차이](image-2.png)
 
 - 사용 목적:
 
@@ -209,3 +215,11 @@
   QUIC은 UDP를 사용하여 더 빠른 연결 설정과 데이터 전송을 제공합니다. TCP의 문제점을 개선하여 더 낮은 지연과 더 빠른 성능을 가져옵니다.
   다중 경로로 데이터를 전송하여 패킷 손실 시 다른 경로를 통해 재전송하여 신뢰성을 확보합니다.
   HTTP/2와 마찬가지로 멀티플렉싱과 헤더 압축을 지원하여 성능을 향상시킵니다.
+
+##### 참고
+
+- https://ko.wikipedia.org/wiki/HTTP
+
+- https://aws.amazon.com/ko/compare/the-difference-between-https-and-http/
+
+* http://www.ktword.co.kr/test/view/view.php?m_temp1=648

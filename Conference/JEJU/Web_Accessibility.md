@@ -1,3 +1,5 @@
+# 주니어 개발자가 생각하는 웹 접근성
+
 ### 접근성
 
 - 모든 사람이 공공 장소, 건물, 제품, 서비스 등에 쉽게 접근하고 이용할 수 있또록 설계되어 있는 상태
@@ -49,4 +51,5 @@
 - 개발
 
 http://wiki.hash.kr/index.php/KWCAG
+
 http://www.websoul.co.kr/accessibility/WA_guide21.asp

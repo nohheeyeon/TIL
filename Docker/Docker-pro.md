@@ -60,3 +60,20 @@
 * 도커 레지스트리 ( Docker Registries )
   - 도커 이미지 ( Docker Image )를 관리하고 저장하는 곳
     - Docker hub: 디폴트 레지스트리, 누구나 접근 가능한 공개형 저장소
+
+### Docker CLI
+
+- Download an image from registry
+  - docker pull [OPTINS]NAME:[:TAG|@DIGEST]
+- List images
+  - docker images [OPTIONS]REPOSITORY[:TAG]]
+- Create and run a new container from an image
+  - docker run [OPTIONS]IMAGE[COMMAND][ARG...]
+- Stop one or more running containers
+  - docker stop [OPTINOS]CONTAINER[CONTAINER...]
+- Fetch the logs of a container
+  - docker logs [OPTIONS] CONTAINER
+- Remove one or more containers
+  - docker rm [OPTIONS]CONTAINER[CONTAINER...]
+- Remove one or more images
+  - docker rmi [OPTIONS]IMAGE[IMAGE...]

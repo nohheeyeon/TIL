@@ -115,3 +115,34 @@ https://docs.docker.com/compose/compose-file/
 
 - 도커 컨테이너를 일괄적으로 정의하고 제어하는 도구
 - 설정 파일을 도커 CLI로 번역하는 역할
+
+##### 도커 컴포즈 파일 구성
+
+- version
+- services
+  - 실행하려는 컨테이너들을 정의하는 역할
+  - 이름, 이미지, 포트 매핑, 환경 변수, 볼륨 등을 포함
+  - 해당 정보를 가지고 컨테이너를 생성하고 관리
+    - image: 컨테이너를 생성할 때 쓰일 이미지 지정
+    - build: 정의된 도커파일에서 이미지를 빌드해 서비스의 컨테이너를 생성하도록 설정
+    - environment: 환경 변수 설정, docker run 명령어의 --env, -e 옵션과 동일
+    - command: 컨테이너가 실행될 때 수행할 명령어, docker run 명령어의 마지막에 붙는 커맨드와 동일
+    - depends_on: 컨테이너 간의 의존성 주입, 명시된 컨테이너가 먼저 생성되고 실행
+    - ports: 개방할 포트 지정, docker run 명령어의 -p와 동일
+    - expose: 링크로 연계된 컨테이너에게만 공개할 포트 설정
+    - volumes: 컨테이너에 볼륨을 마운트함
+    - restart: 컨테인어가 종료될 때 재시작 정책
+      - no: 재시작되지않음
+      - always: 외부에 영향에 의해 종료되었을 때 항상 재시작 ( 수동으로 끄기 전까지)
+      - on-failure: 오류가 있을 시에 재시작
+
+##### 도커 컴포트 명령어
+
+- docker-compose vs docker compose
+  -> docker-compose 명령어가 docker compose로 흡수되었음
+  -> 이전에는 Docker에서는 docker-compose 명령어가 별도로 설치되어야 했지만, Docker 1.13 이후로는 docker-compose 명령어가 Docker CLI에 통합됨
+
+* docker-compose -f local-infra.yml up -d
+  - up: 도커 컴포즈 파일로, 컨테이너를 생성하기
+  - -f: 도커 컴포즈 파일 지정하기
+  - -d: 백그라운드에서 실행하기

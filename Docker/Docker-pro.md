@@ -66,7 +66,7 @@
 - Download an image from registry
   - docker pull [OPTINS]NAME:[:TAG|@DIGEST]
 - List images
-  - docker images [OPTIONS]REPOSITORY[:TAG]]
+  - docker images [OPTIONS] [REPOSITORY [:TAG]]
 - Create and run a new container from an image
   - docker run [OPTIONS]IMAGE[COMMAND][ARG...]
 - Stop one or more running containers
@@ -77,3 +77,41 @@
   - docker rm [OPTIONS]CONTAINER[CONTAINER...]
 - Remove one or more images
   - docker rmi [OPTIONS]IMAGE[IMAGE...]
+
+### 도커 이미지 빌드하기
+
+    Dockerfile syntax
+    https://docs.docker.com/build/guide/intro/
+
+- FROM: 베이스 이미지 선정
+- WORKDIR: work directory 선정
+- COPY: 복사할 파일 선정 (예: 작업한 서비스 파일들)
+- RUN: 실행할 명령어
+- ENTRYPOINT: 컨테이너가 시작할 때 실행할 명령어 (예: 서버 실행)
+
+### 도커 이미지를 도커 허브에 올리기
+
+도커 이미지 만들기
+
+- 이미지 태그 설정
+  - Docker Hub에 이미지를 등록하려면 아래와 같은 규칙을 준수해야한다:
+    - [Docker Hub 사용자명]/이미지명:[태그명]
+  - 태그 방법
+    - build 시: docker build -t my-httpd .
+    - build 후: docker image tag [image name]
+
+### 도커 네트워크
+
+네트워크 드라이버
+
+- Network Drivers [https://docs.docker.com/network/drivers/]
+  - bridge: 기본 네트워크 드라이버, 동일한 도커 호스트에서 컨테이너 간의 통신을 도와줌
+  - host: 호스트의 네트워크를 직접 사용
+  - overlay: 서로 다른 도커 호스트의 컨테이너 간 통신을 도와줌
+
+### 도커 컴포즈
+
+https://docs.docker.com/compose/compose-file/
+
+- 도커 컨테이너를 일괄적으로 정의하고 제어하는 도구
+- 설정 파일을 도커 CLI로 번역하는 역할

@@ -232,3 +232,41 @@ num += 5;
 
 console.log(num);
 ```
+
+##### 증가 연산자, 감소 연산자
+
+```javascript
+let num = 10;
+let result = num++; // 증가시키키 전의 값
+let result = ++num; // 증가시킨 값
+
+console.log(result);
+```
+
+##### 비교 연산자, 조건문
+
+```javascript
+console.log(1 > 5);
+console.log(10 == 5);
+console.log(10 != 5);
+```
+
+동등 연산자
+
+```javascript
+const a = 1;
+const b = "1";
+
+console.log(a == b); // true
+console.log(a === b); /// 일치 연산자 : type 까지 비교
+```
+
+조건문
+
+- if문
+- else
+- else if
+
+```
+
+```

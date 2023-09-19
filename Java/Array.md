@@ -128,11 +128,6 @@ score[5] = 100; // index의 범위를 벗어난 값을 index로 사용
   - 배열의 index로 변수를 많이 사용하는데, 변수의 값을 실행 시에 대입되므로 컴파일러는 이 값의 범위를 확인할 수 없다
   - 무사히 컴파일을 마쳤더라도 실행 시에 에러가 발생한다 (ArrayIndexOutOfException)
 
-### 배열의 초기화
-
-- 배열을 초기화하려면 배열의 각 요소에 값을 할당해야 합니다
-- 초기화는 배열 선언과 동시에 수행할 수 있으며, 나중에 개별적으로 수행할 수도 있습니다
-
 #### 배열의 길이
 
 - 배열의 요소의 개수, 즉 값을 저장할 수 있는 공간의 개수다
@@ -214,10 +209,10 @@ int tmp = arr.length; // arr.length의 값은 5이고 tmp에 5가 저장된다
 ```java
 int[] score = new int[5]; // 길이가 5인 int형 배열을 생성
 score[0] = 50; // 각 요소에 직접 값을 저장
-score[0] = 60;
-score[0] = 70;
-score[0] = 80;
-score[0] = 90;
+score[1] = 60;
+score[2] = 70;
+score[3] = 80;
+score[4] = 90;
 ```
 
 - 배열의 길이가 큰 경우에는 요소 하나하나에 값을 지정하기 보다는 for문을 사용하는 것이 좋다
@@ -312,13 +307,37 @@ System.arraycopy(num, 0, newNum, 0, num.length);
 String[] names = new String[3]; // 크기가 3인 String 배열 생성
 ```
 
++) 타입에 따른 변수의 기본값(default value)
+
+| 데이터 타입              | 기본값             |
+| ------------------------ | ------------------ |
+| byte                     | 0                  |
+| short                    | 0                  |
+| int                      | 0                  |
+| long                     | 0L                 |
+| float                    | 0.0f               |
+| double                   | 0.0                |
+| char                     | '\u0000' (널 문자) |
+| boolean                  | false              |
+| 참조 타입 (클래스, 배열) | null               |
+
 ### String 배열의 초기화
 
 - `String` 배열을 초기화하려면 각 요소에 문자열을 할당하면 됩니다
 - int배열과 동일한 방법
 
 ```java
-String[] names = {"Alice", "Bob", "Charlie"}; // 배열 선언 및 초기화
+String[] name = new String[3]; // 길이가 3인 String 배열을 생성
+name[0] = "Kim";
+name[1] = "Park";
+name[2] = "Noh";
+```
+
+- String클래스만 큰따옴표만으로 간략히 표현하는 것이 허용된다
+
+```java
+String[] names = new String[]{"Alice", "Bob", "Charlie"}; // 배열 선언 및 초기화
+String[] names = {"Alice", "Bob", "Charlie"}; //new String[]을 생략할 수 있음
 ```
 
 ### char 배열과 String 클래스
@@ -337,14 +356,81 @@ System.out.println(str); // java8
 
 -> 문자열 str의 내용이 변경되는 것 같지만, 문자열은 변경할 수 없으므로 새로운 내용의 문자열이 생성된다
 
+#### String클래스의 주요 메서드
+
+| 메서드                                           | 설명                                                                       |
+| ------------------------------------------------ | -------------------------------------------------------------------------- |
+| `int length()`                                   | 문자열의 길이를 반환합니다.                                                |
+| `char charAt(int index)`                         | 지정한 인덱스에 있는 문자를 반환합니다.                                    |
+| `boolean isEmpty()`                              | 문자열이 비어 있는지 여부를 확인합니다.                                    |
+| `String substring(int beginIndex)`               | 지정한 인덱스부터 끝까지의 부분 문자열을 반환합니다.                       |
+| `String substring(int beginIndex, int endIndex)` | 지정한 범위의 부분 문자열을 반환합니다.                                    |
+| `boolean contains(CharSequence sequence)`        | 문자열이 지정한 문자열 또는 문자 시퀀스를 포함하는지 여부를 확인합니다.    |
+| `boolean startsWith(String prefix)`              | 문자열이 지정한 접두사로 시작하는지 여부를 확인합니다.                     |
+| `boolean endsWith(String suffix)`                | 문자열이 지정한 접미사로 끝나는지 여부를 확인합니다.                       |
+| `int indexOf(String str)`                        | 지정한 문자열이 처음으로 등장하는 인덱스를 반환합니다.                     |
+| `int lastIndexOf(String str)`                    | 지정한 문자열이 마지막으로 등장하는 인덱스를 반환합니다.                   |
+| `String replace(char oldChar, char newChar)`     | 문자열 내에서 지정한 문자를 다른 문자로 대체합니다.                        |
+| `String toUpperCase()`                           | 문자열을 대문자로 변환한 새 문자열을 반환합니다.                           |
+| `String toLowerCase()`                           | 문자열을 소문자로 변환한 새 문자열을 반환합니다.                           |
+| `String trim()`                                  | 문자열의 앞뒤 공백을 제거한 새 문자열을 반환합니다.                        |
+| `String[] split(String regex)`                   | 정규 표현식을 기반으로 문자열을 분할하여 배열로 반환합니다.                |
+| `boolean equals(Object obj)`                     | 다른 객체 또는 문자열과 현재 문자열을 비교하여 동등한지 여부를 확인합니다. |
+| `boolean equalsIgnoreCase(String anotherString)` | 대소문자를 무시하고 문자열을 비교하여 동등한지 여부를 확인합니다.          |
+| `String concat(String str)`                      | 현재 문자열에 지정한 문자열을 연결한 새 문자열을 반환합니다.               |
+| `static String valueOf(int value)`               | 다양한 데이터 유형을 문자열로 변환합니다.                                  |
+
+- charAt메서드
+  - 문자열에서 지정된 index에 있는 한 문자를 가져온다
+  - 배열에서 '배열이름[index]'로 index에 위치한 갑ㅈㅅ을 가져오는 것과 같다고 생각하면 된다
+  - 배열과 마찬가지로 charAt메서드의 index값은 0부터 시작한다
+
 ```java
-char[] charArray = {'H', 'e', 'l', 'l', 'o'};
-String str = new String(charArray); // char 배열을 String으로 변환
+String str = "ABCDE";
+char ch = str.charAt(3); // 문자열 str의 4번째 문자 'D'를 ch에 저장
+```
+
+- substing()
+  - 문자열의 일부를 뽑아낼 수 있다
+  - **범위의 끝은 포함되지 않는다 ex) index의 범위가 1~4라면 4는 범위에 포함되지 않는다**
+
+```java
+String str = "012345";
+String tmp = str.substring(1,4); // str에서 index범위 1~4 범위 1~4의 문자들을 반환
+System.out.println(tmp); // "123"이 출력된다
+```
+
+- equal()
+  - 문자열의 내용이 같은 지 다른 지 확인하는데 사용된다
+  - 기본형 변수의 값을 비교하는 경우 '=='연산자를 사용하지만, 문자열의 내용을 비교할 때는 equals()를 사용해아 한다
+  - 이 메서드는 대소문자를 구분한다
+    - 대소문자를 구분하지 않고 비교하려면 equals()대신 equalsIgnoreCase()를 사용해야한다
+
+```java
+String str = "abc";
+if(str.equals("abc")) { // str와 "abc"가 내용이 같은 지 확인한다
+        ...
+        }
+```
+
+#### char배열과 String클래스의 반환
+
+```java
+char[] chArr = {'A', 'B', 'C', 'D'};
+String str = new String(chArr); // char배열 -> String
+char[] tmp = str.toCharArray(); // String -> char배열
 ```
 
 ### 커맨드 라인을 통해 입력받기
 
-- 커맨드 라인에서 사용자 입력을 받아와 `String` 배열에 저장하는 방법을 이용하여 프로그램을 작성할 수 있습니다
+- Scannser클래스의 nextLine() 외에도 화면을 통해 상요자로부터 값을 입력받을 수 있는 간단한 방법임 -> 커맨드라인을 이용한 방법
+- 프로그램을 실행할 ㄸ ㅐ클래스 이름 뒤에 공백문자로 구분하여 여러 개의 문자열을 프로그램에 전달할 수 있다
+- 만약 실행할 프로그램의 main메서드가 담긴 클래스의 이름이 MainTest라고 가정하면
+
+```java
+c:jdk1.8\work\ch5\java MainTest abc 123
+// 커맨드라인을 통해 입력된 두 문자열은 String배열에 담겨서 MainTest클래스의 main메서드의 매개변수(args)에 전달된다
+```
 
 ```java
 public class CommandLineInput {
@@ -356,14 +442,43 @@ public class CommandLineInput {
 }
 ```
 
-## 다차원 배열
+## 다차원 배열 (multi-dimensional)
+
+- 메모리의 용량이 허요하는 한, 차원의 제한은 없다
 
 ### 2차원 배열의 선언과 인덱스
 
 - 2차원 배열은 행과 열로 구성되며, 각 요소는 두 개의 인덱스를 사용하여 접근됩니다
 
+| 데이터 유형       | 배열 이름       | 선언 예시            |
+| ----------------- | --------------- | -------------------- |
+| 정수형 2차원 배열 | `int[][]`       | `int[][] matrix;`    |
+| 문자열 2차원 배열 | `String[][]`    | `String[][] names;`  |
+| 실수형 2차원 배열 | `double[][]`    | `double[][] scores;` |
+| 객체형 2차원 배열 | `ClassName[][]` | `Person[][] people;` |
+
+- 3차원 이상의 고차원 배열의 선언은 대괄호[]의 개수를 차원의 수 만큼 추가해주면 된다
+- 2차원 배열은 주로 테이블 형태의 데이터를 담는데 사용되며, 만일 4행 3열의 데이터를 담기 위한 배열을 생성하려면
+
+```java
+int[][] score = new int[4][3]; // 4행 3열의 2차원 배열을 생성한다
+```
+
 ```java
 int[][] matrix = new int[3][4]; // 3x4 크기의 2차원 배열 생성
+```
+
+| int | int | int |
+| --- | --- | --- |
+| int | int | int |
+| int | int | int |
+| int | int | int |
+
+#### 2차원 배열의 index
+
+```java
+score[0][0] = 100; // 배열 score의 1행 1열에 100을 저장
+System.out.println(score[0][0]); // 배열 score의 1행 1열의 값을 출력
 ```
 
 ### 2차원 배열의 초기화
@@ -372,7 +487,18 @@ int[][] matrix = new int[3][4]; // 3x4 크기의 2차원 배열 생성
 - 중첩된 `for` 루프를 사용하여 초기화할 수 있습니다
 
 ```java
-int [][] arr = new int[][]{{1,2,3}, {4,5,6}}
+int [][] arr = new int[][]{
+        {1,2,3},
+        {4,5,6}
+}
+```
+
+```java
+for (int i=0;i<score.length;i++) {
+    for int j=0;j<score[i].length;j++ {
+        score[i][j] = 10;
+        }
+}
 ```
 
 ### 가변 배열

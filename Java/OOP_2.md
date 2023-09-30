@@ -731,3 +731,99 @@ public class Main {
 
 - Animal 클래스는 부모 클래스로서 Dog와 Cat 클래스가 상속받고 있습니다
   - 배열 animals는 Animal 타입으로 선언되었지만, 다형성 덕분에 Dog와 Cat 객체를 모두 담을 수 있습니다
+
+## 추상클래스(abstract class)
+
+### 추상클래스란?
+
+- 미완성 클래스 / 완성되지 못한 채 남겨진 클래스
+- 미완성이라는 것은 멤버의 개수에 관계된 것이 아니라, 단지 미완성 메서드(추상메서드)를 포함하고 있다는 의미이다
+- 추상클래스로 인스턴스는 생성할 수 없다
+  - 추상클래스는 상속을 통해서 자손클래스에 의해서만 완성될 수 있다
+- 추상클래스 자체로는 클래스로서의 역할을 다 못 하지만, 새로운 클래스를 작성하는데 있어서 바탕이 되는 조상클래스로서 중요한 의미를 갖는다
+
+```java
+abstract class 클래스이름 {
+    ...
+}
+```
+
+- 추상클래스는 키워드 'abstract'를 붙이기만 하면된다
+  - 이 클래스를 사용할 때, 클래스 선언부의 abstract를 보고 이 클래스에는 추상메서드가 있으니 상속을 통해서 구현해주어야 한다는 것을 알 수 있을 것이다
+  - 추상클래스에도 생성자가 있으며, 멤버변수와 메서드도 가질 수 있다
+
+### 추상메서드 (abstract method)
+
+- 메서드는 선언부와 구현부로 구성되어 있다
+  - 선언부만 작성하고 구현부는 작성하지 않은 채로 남겨 둔 것이 추상메서드이다
+    - 즉, 설계만 해놓고 실제 수행될 내용은 작성하지 않았기 때문에 미완성 메서드인 것이다
+- 메서드를 미완성 상태로 남겨 놓는 이유
+  - 메서드의 내용이 상속받는 클래스에 따라 달라질 수 있기 때문에 조상 클래스에서는 선언부만ㅇ르 작성하고, 주석을 덧붙여 어떤 기능을 수행할 목적으로 작성되었는 지 알려 주고, 실제 내용은 상속받는 클래스에서 구현하도록 비워두는 것이다
+    - 그래서 추상클래스를 상속받는 자손 클래스는 조상의 추상 메서드를 상황에 맞게 적절히 구현해주어야 한다
+
+```java
+// 주석을 통해 어떤 기능을 수행할 목적으로 작성하였는 지 설명한다
+abstract 리턴타입 메서드이름();
+```
+
+- 키워드 abstract를 앞에 붙여 주고, 추상메서드는 구현부가 없으므로 괄호{}대신 문장의 끝을 알리는 ';'을 적어준다
+
+```java
+abstract class Player { // 추상클래스
+    abstract  void play(int pos); // 추상메서드
+    abstract  void stop(); // 추상메서드
+}
+class AudioPlayer extends Player {
+    void play(int pos) { /* 내용생략 */ } // 추상메서드를 구현
+    void stop() { /* 내용 생략 */ } // 추상메서드를 구현
+}
+abstract class AbstractPlayer extends Player {
+    void play(int pos) { /* 내용 생략 */ } // 추상메서드를 구현
+}
+```
+
+- 추상클래스로부터 상속받는 자손클래스는 오버라이딩을 통해 조상인 추상클래스의 추상메서드를 모두 구현해줘야한다
+  - 조상으로부터 상속받은 추상메서드 중 하나라도 구현하지 않는다면, 자손클래스 역시 추상클래스로 지정해줘야한다
+
+### 추상클래스의 작성
+
+- 추상화는 기존의 클래스의 공통부분을 뽑아내서 조상 클래스를 만드는 것이라고 할 수 있다
+- 추상화를 구체화와 반대되는 의미로 이해하면 보다 쉽게 이해할 수 있다
+  - 상속계층도를 따라 내려갈수록 클래스는 점점 기능이 추가되어 구체화의 정도가 심해지며, 상속 계층도를 따라 올라갈수록 클래스는 추상화의 정도가 심해진다고 할 수 있다
+    - 즉, 상속계층도를 따라 내려 갈수록 세분화되며, 올라갈수록 공통요소만 남게 된다
+
+<img width="300" alt="image" src="https://github.com/nohheeyeon/TIL/assets/130336617/71bda9bb-7e1e-41e0-8815-f6774bfb61ee"> <br>
+
+```java
+// 추상 클래스 Animal
+abstract class Animal {
+    // 추상 메서드 speak 선언
+    abstract void speak();
+}
+
+// 추상 클래스 Animal을 상속받은 구체 클래스 Dog
+class Dog extends Animal {
+    @Override
+    void speak() {
+        System.out.println("멍멍!");
+    }
+}
+
+// 추상 클래스 Animal을 상속받은 구체 클래스 Cat
+class Cat extends Animal {
+    @Override
+    void speak() {
+        System.out.println("야옹!");
+    }
+}
+
+public class AbstractClassExample {
+    public static void main(String[] args) {
+        Animal dog = new Dog();
+        Animal cat = new Cat();
+
+        dog.speak(); // "멍멍!" 출력
+        cat.speak(); // "야옹!" 출력
+    }
+}
+```

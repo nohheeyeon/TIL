@@ -110,29 +110,143 @@ class Box<T> {
 }
 ```
 
-### 지네릭 클래스의 객체 생성과 사용
+## 지네릭 클래스의 객체 생성과 사용
 
-- 지네릭 클래스를 사용하기 위해 객체를 생성
+- 지네릭 클래스 Box<T>가 정의되어 있다고 가정
+  - 이 Box<T>의 객체에는 한 가지 종류, 즉 T타입의 객체만 저장할 수 있다
+    - ArrayList를 이용해서 여러 객체를 저장할 수 있도록 하였다
 
 ```java
-Box<String> box = new Box<>();
+import java.util.ArrayList;
+
+class Box<T> {
+    ArrayList<T> list = new ArrayList<>(T)();
+
+    void add(T item) { list.add(item); }
+    T get(int i) { return list.get(i); }
+    ArrayList<T> getList() { return list; }
+    int size() { return list.size(); }
+    public String toString() { return list.toString(); }
+}
+```
+
+- Box<T>의 객체를 생성할 때는 참조변수와 생성자에 대입된 타입(매개 변수화된 타입)이 일치해야 한다
+
+```java
+Box<Apple> appleBox = new Box<Apple>(); // OK
+Box<Apple> appleBox = new Box<Grape>(); // 에러
+```
+
+- 두 타입이 상속관계에 있어도 마찬가지!
+
+```java
+// Apple이 Fruit의 자손이라고 가정
+
+Box<Fruit> appleBox = new Box<Apple>; // 에러, 대입된 타입이 다르다
+```
+
+- 단, 두 지네릭 클래스의 타입이 상속관계에 있고, 대입된 타입이 같은 것은 괜찮다
+
+```java
+// FruitBox는 Box의 자손이라고 가정
+
+Box<Apple> appleBox = new FruitBox<Apple>(); // OK, 다형성
+```
+
+- JDK1.7부터는 추정이 가능한 경우 타입을 생략할 수 있게 되었다
+  - 참조변수의 타입으로부터 Box가 Apple타입의 객체만 저장한다는 것을 알 수 있기 때문에, 생성자에 반복해서 타입을 지정해주지 않아도 되는 것이다
+
+```java
+Box<Apple> appleBox = new Box<Apple>();
+Box<Apple> appleBox = new Box<>(); // OK, JDK1.7부터 생략가능
+```
+
+- 생성된 Box<T>의 객체에 'void add(T item)'으로 객체를 추가할 때, 대입된 타입과 다른 타입의 객체는 추가할 수 없다
+
+```java
+Box<Apple> appleBox = new Box<Apple>();
+appleBox.add(new Apple()); // OK
+appleBox.add(new Grape()); // 에러, Box<Apple>에는 Apple객체만 추가가능
+```
+
+- 타입 T가 'Fruit'인 경우, 'void add(Fruit item)'가 되므로 Fruit의 자손들은 이 메서드의 매개변수가 될 수 있다
+
+```java
+// Apple이 Fruit의 자손이라고 가정
+
+Box<Fruit> fruitBox = new Box<Fruit>();
+fruitBox.add(new Fruit()); // OK
+fruitBox.add(new Apple()); // OK, void add(Fruit item)
 ```
 
 ### 제한된 지네릭 클래스
 
-- 지네릭 타입을 특정한 범위의 클래스로 제한할 수 있습니다
-  - 예를 들어, 특정 인터페이스를 구현한 클래스만 허용하는 경우
+- 타입 문자로 사용할 타입을 명시하면 한 종류의 타입만 저장할 수 있도록 제한할 수 있지만, 그래도 여전히 모든 종류의 타입을 지정할 수 있다는 것에는 변함이 없다
+- 그렇다면, 타입 매개변수 T에 지정할 수 있는 타입의 종류를 제한할 수 있는 방법은?!?!
 
 ```java
-class Box<T extends SomeInterface> {
-    // ...
+FruitBox<Toy> fruitBox = new FruitBox<Toy>();
+fruitBox.add(new Toy()); // OK, 과일상자에 장난감을 담을 수 있다
+```
+
+- 지네릭 타입에 'extends'를 사용하면, 특정 타입의 자손들만 대입할 수 있게 제한할 수 있다
+
+```java
+import java.util.ArrayList;
+
+class FruitBox<T extends Fruit> { // Fruit의 자손만 타입으로 지정가능
+    ArrayList<T> list = new ArrayList<T>();
+  ...
 }
 ```
+
+- 여전히 한 종류의 타입만 담을 수 있지만, Fruit클래스의 자손들만 담을 수 있다는 제한이 더 추가된 것이다
+
+```java
+FruitBox<Apple> appleBox = new FruitBox<Apple>(); // OK
+FruitBox<Toy> toyBox = new FruitBox<Toy>(); // 에러, Toy는 Fruit의 자손이 아님
+```
+
+- 게다가 add()의 매개변수의 타입 T도 Fruit와 그 자손 타입이 될 수 있다
+
+```java
+FruitBox<Fruit> fruitBox = new FruitBox<Fruit>(); // OK
+fruitBox.add(new Apple()); // OK, Apple이 Fruit의 자손
+fruitBox.add(new Grape()); // OK, Grape가 Fruit의 자손
+```
+
+- 다형성에서 조상타입의 참조변수로 자손타입의 객체를 가리킬 수 있는 것처럼, 매개변수화된 타입의 자손 타입도 가능한 것이다
+- 타입 매개변수 T에 Object를 대입하면, 모든 종류의 객체를 저장할 수 있게 된다
+
+- 만일 클래스가 아니라 인터페이스를 구현해야 한다는 제약이 필요하다면, 이때도 'extends'를 사용한다
+  - 'implements'를 사용하지 않다는 점에 주의!
+
+```java
+interface Eatable {}
+class FruitBox<T extends Eatable> { ... }
+```
+
+- 클래스 Fruit의 자손이면서 Eatable인터페이스도 구현해야한다면 '&' 기호로 연결한다
+
+```java
+class FruitBox<T extends Fruit & Eatable> { ... }
+```
+
+- FruitBox에는 Fruit의 자손이면서 Eatable을 구현한 클래스만 타입 매개변수 T에 대입될 수 있다
 
 ### 와일드 카드
 
 - 와일드 카드(`?`)는 모든 지네릭 타입을 대신할 수 있는 특별한 타입입니다
   - 와일드 카드는 유연한 매개변수로 메서드를 작성할 때 사용됩니다
+
+```java
+<? extends T> : 와일드 카드의 상한 제한, T와 그 자손들만 가능
+<? super T> : 와일드 카드의 하한 제한, T와 그 조상들만 가능
+<?> : 제한 없음, 모든 타입이 가능, <? extends Object>와 동일
+```
+
+- 지네릭 클래스와 달리 와일드 카드에는 '&'를 사용할 수 없다
+  - 즉, <? extends T & E>와 같이 할 수 없다
 
 ```java
 public void printList(List<?> list) {

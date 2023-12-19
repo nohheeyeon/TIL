@@ -169,7 +169,7 @@ Boolean
 
 - false
   - 숫자 0
-  - 빈 문자열 /"
+  - 빈 문자열 ""
   - null
   - undefined
   - NaN
